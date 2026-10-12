@@ -350,22 +350,25 @@
     <div class="modal">
       <h2>导出数据</h2>
       <div class="export-tip">
-        <strong>手机用户请优先用「复制全部内容」</strong><br>
-        iPhone Safari 经常禁止网页自动下载文件。<br>
-        复制后粘贴到「备忘录」保存即可。
+        <strong>iPhone 推荐使用「系统分享」</strong><br>
+        选择「存储到文件」即可保存为干净的 .json 文件，不会产生空白文本。
       </div>
       <div class="export-content" id="exportContent"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" onclick="closeExportModal()">关闭</button>
         <button type="button" class="btn btn-outline" onclick="copyExportData()">复制全部内容</button>
-        <button type="button" class="btn btn-primary" id="shareBtn" onclick="shareData()" style="display:none">系统分享</button>
-        <button type="button" class="btn btn-primary" onclick="downloadFile()">尝试下载文件</button>
+        <button type="button" class="btn btn-primary" id="shareBtn" onclick="shareData()">系统分享</button>
+        <button type="button" class="btn btn-primary" id="downloadBtn" onclick="downloadFile()">尝试下载文件</button>
       </div>
     </div>
   </div>
 
   <script>
     const STORAGE_KEY = 'user_manager_data_v6';
+
+    // 检测是否是 iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     function loadData() {
       try {
@@ -738,9 +741,18 @@
       exportJsonStr = JSON.stringify(data, null, 2);
       exportFileName = `用户资料_${new Date().toISOString().slice(0, 10)}.json`;
       document.getElementById('exportContent').textContent = exportJsonStr;
-      if (navigator.share) {
-        document.getElementById('shareBtn').style.display = 'inline-block';
+
+      // iOS 隐藏下载按钮，避免产生空白文件
+      const downloadBtn = document.getElementById('downloadBtn');
+      if (isIOS) {
+        downloadBtn.style.display = 'none';
+      } else {
+        downloadBtn.style.display = 'inline-block';
       }
+
+      // 显示分享按钮
+      document.getElementById('shareBtn').style.display = navigator.share ? 'inline-block' : 'none';
+
       document.getElementById('exportModal').classList.add('show');
     }
 
@@ -776,15 +788,34 @@
       }
     }
 
+    // 优化后的系统分享（避免产生空白 TXT）
     async function shareData() {
-      if (!navigator.share) return;
+      if (!navigator.share) {
+        alert('当前浏览器不支持系统分享，请使用复制功能');
+        return;
+      }
+
       try {
-        const file = new File([exportJsonStr], exportFileName, { type: 'application/json' });
-        await navigator.share({ title: '用户资料备份', files: [file] });
+        const blob = new Blob([exportJsonStr], { type: 'application/json' });
+        const file = new File([blob], exportFileName, { type: 'application/json' });
+
+        // 检查是否支持分享文件
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: '用户资料备份'
+          });
+        } else {
+          // 不支持文件分享 → 直接复制，避免用 text 分享产生「文本」文件
+          copyExportData();
+          alert('当前系统不支持直接分享文件，已为你复制内容，请粘贴到备忘录保存为 .json');
+        }
       } catch (e) {
-        try {
-          await navigator.share({ title: '用户资料备份', text: exportJsonStr });
-        } catch (err) {}
+        // 用户取消分享不提示
+        if (e.name !== 'AbortError') {
+          copyExportData();
+          alert('分享失败，已为你复制内容，请手动保存');
+        }
       }
     }
 
