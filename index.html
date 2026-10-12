@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Future Tech Navigation</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  
+  <!-- 模板CSS从根目录加载 -->
+  <link id="template-css" rel="stylesheet" href="">
+
+  <style>
+    a.nav-btn, button.nav-btn {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      color: #ffffff;
+      box-sizing: border-box !important;
+    }
+
+    /* 会员到期前端拦截UI（优化为与后台一致的精致小弹窗大小） */
+    .expired-gray-mode > *:not(#expired-overlay) { 
+      filter: grayscale(100%); 
+      pointer-events: none !important; 
+      user-select: none; 
+      opacity: 0.5;
+    }
+    #expired-overlay { 
+      position: fixed; inset: 0; background: rgba(10, 16, 34, 0.95); backdrop-filter: blur(10px); 
+      z-index: 999999; display: none; align-items: center; justify-content: center; 
+      padding: 20px; pointer-events: auto;
+    }
+    .expired-box { 
+      background: rgba(24, 18, 46, 0.98); border: 2px solid #ff4d4d; border-radius: 20px; 
+      padding: 32px 26px; box-shadow: 0 0 50px rgba(255, 77, 77, 0.4); max-width: 420px; width: 100%; text-align: center; 
+    }
+    .expired-title { 
+      color: #ff4d4d; font-size: 20px; font-weight: bold; margin-bottom: 16px; 
+    }
+    .expired-desc { 
+      color: #fff; font-size: 14px; line-height: 1.6; 
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="center-content">
+    <div class="adv-bar"><div class="adv-text" id="adv-text-field">Loading...</div></div>
+    <nav id="nav-container"></nav>
+  </div>
+  <div class="footer-en" id="footer-field"></div>
+  <div id="modal" style="display:none"></div>
+
+  <!-- 到期强制拦截弹窗（精致小巧居中） -->
+  <div id="expired-overlay">
+    <div class="expired-box">
+      <div class="expired-title">⚠️ 站点已暂停服务</div>
+      <div class="expired-desc">系统会员服务已到期，站点资源已被锁定并暂停对外开放。<br><br>如需恢复正常访问，请联系上级进行续费解锁。</div>
+    </div>
+  </div>
+
+  <script>
+    function trackVisit() {
+      fetch('/api/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          v4ip: null,
+          domain: window.location.hostname 
+        })
+      }).catch(() => {});
+    }
+
+    async function loadContent() {
+      trackVisit();
+      try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        
+        // ======== 会员到期判断逻辑 ========
+        const vipTime = data.vip_expire_time;
+        if (vipTime) {
+          const expireMs = new Date(vipTime).getTime();
+          if (!isNaN(expireMs) && Date.now() > expireMs) {
+            document.getElementById('expired-overlay').style.display = 'flex';
+            document.body.classList.add('expired-gray-mode'); // 强制全站变灰且阻断操作
+            return; // 阻断后续渲染，防止泄露及跳转操作
+          }
+        }
+        // ================================
+
+        // 检查是否有开启直跳模式的按钮，如果有且是从根路径访问，直接跳转
+        if (data.links && data.links.length > 0) {
+          const directLink = data.links.find(l => l.is_direct === 1);
+          if (directLink) {
+            window.location.href = `/api/redirect?id=${directLink.id}`;
+            return;
+          }
+        }
+
+        if(data.config) {
+          document.getElementById('adv-text-field').innerText = data.config.adv_text;
+          document.getElementById('footer-field').innerHTML = data.config.footer_text;
+        }
+
+        const templateName = data.current_template || 'default';
+        document.getElementById('template-css').href = `/${templateName}.css`;
+
+        const nav = document.getElementById('nav-container');
+        nav.innerHTML = '';
+        
+        data.links.forEach(link => {
+          const btn = document.createElement('a');
+          btn.className = 'nav-btn';
+          btn.innerText = link.title;
+          btn.href = `/api/redirect?id=${link.id}`;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          
+          btn.style.textDecoration = 'none';
+          btn.style.textAlign = 'center';
+          btn.style.display = 'flex';
+          btn.style.alignItems = 'center';
+          btn.style.justifyContent = 'center';
+          
+          btn.onclick = function() {
+            show('正在进入…');
+          };
+          
+          nav.appendChild(btn);
+        });
+      } catch (e) {}
+    }
+
+    const canvas=document.getElementById('bg-canvas'),ctx=canvas.getContext('2d');
+    let w,h;function resize(){w=innerWidth;h=innerHeight;canvas.width=w;canvas.height=h;}
+    window.addEventListener('resize',resize);resize();
+    const parts=[],N=w>900?70:40,D=w>900?130:85;
+    for(let i=0;i<N;i++)parts.push({x:Math.random()*w,y:Math.random()*h,dx:Math.random()*.7-.35,dy:Math.random()*.7-.35,r:1.4+Math.random()*2.2});
+    (function loop(){
+      ctx.clearRect(0,0,w,h);
+      parts.forEach(p=>{
+        p.x+=p.dx;p.y+=p.dy;
+        if(p.x<0||p.x>w)p.dx*=-1;if(p.y<0||p.y>h)p.dy*=-1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,2*Math.PI);ctx.fillStyle='#23eaff';ctx.globalAlpha=.86;ctx.fill();ctx.globalAlpha=1;
+      });
+      for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+        const a=parts[i],b=parts[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<D){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#8b5cf6';ctx.globalAlpha=.19+.17*(1-d/D);ctx.lineWidth=1.1;ctx.stroke();ctx.globalAlpha=1;}
+      }
+      requestAnimationFrame(loop);
+    })();
+
+    function show(msg){
+      const m=document.getElementById('modal');
+      m.innerHTML='<div class="modal-mask"><div class="modal-box">'+msg+'</div></div>';
+      m.style.display='block';
+      setTimeout(()=>m.style.display='none',2000);
+    }
+    loadContent();
+  </script>
+</body>
+</html>
