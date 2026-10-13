@@ -295,7 +295,7 @@
     </div>
   </header>
 
-  <input type="text" class="search-box" id="search" placeholder="搜索用户名、域名、卡密、备注..." oninput="render()" />
+  <input type="text" class="search-box" id="search" placeholder="搜索用户名、卡密、备注、后台链接..." oninput="render()" />
   <div class="count" id="count"></div>
   <div id="list"></div>
 
@@ -326,14 +326,6 @@
             <label>后台链接</label>
             <div class="list-box" id="backendList"></div>
             <button type="button" class="btn add-btn" onclick="addBackendItem()">+ 添加后台链接</button>
-          </div>
-
-          <div class="form-group">
-            <label>域名（一行一个，支持多个）</label>
-            <div class="input-wrap">
-              <textarea id="domains" placeholder="example1.com&#10;example2.com&#10;example3.com"></textarea>
-              <button type="button" class="clear-btn textarea-clear" onclick="clearField('domains')">清空</button>
-            </div>
           </div>
 
           <div class="form-group">
@@ -446,12 +438,11 @@
 
       if (keywordLower) {
         data = data.filter(item => {
-          const domainsText = (item.domains || []).join(' ');
           const cardsText = (item.cards || []).map(c => (c.name || '') + ' ' + (c.content || '')).join(' ');
           const notesText = (item.notes || []).map(n => (n.name || '') + ' ' + (n.content || '')).join(' ');
           const backends = normalizeBackends(item);
           const backendsText = backends.map(b => (b.name || '') + ' ' + (b.content || '')).join(' ');
-          const str = [item.username, item.yesterdayStat, domainsText, cardsText, notesText, backendsText].join(' ').toLowerCase();
+          const str = [item.username, item.yesterdayStat, cardsText, notesText, backendsText].join(' ').toLowerCase();
           return str.includes(keywordLower);
         });
       }
@@ -467,10 +458,6 @@
       }
 
       list.innerHTML = data.map(item => {
-        const domainsHtml = (item.domains && item.domains.length)
-          ? `<div class="item-box"><div class="item-content">${highlight(item.domains.join('\n'), keyword)}</div></div>`
-          : '<div style="color:#94a3b8;font-size:13px">暂无域名</div>';
-
         const cards = item.cards || [];
         const cardsHtml = cards.length
           ? cards.map(c => `
@@ -501,15 +488,11 @@
               const url = formatLink(b.content || '');
               return `
                 <div class="item-box">
-                  <div class="kami-item">
-                    <div class="left">
-                      ${b.name ? `<div class="item-name">${highlight(b.name, keyword)}</div>` : ''}
-                      <div class="item-content">
-                        ${url
-                          ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb">${highlight(b.content || '', keyword)}</a>`
-                          : highlight(b.content || '', keyword)}
-                      </div>
-                    </div>
+                  ${b.name ? `<div class="item-name">${highlight(b.name, keyword)}</div>` : ''}
+                  <div class="item-content">
+                    ${url
+                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline">${highlight(b.content || '', keyword)}</a>`
+                      : highlight(b.content || '', keyword)}
                   </div>
                 </div>
               `;
@@ -532,10 +515,6 @@
               ${backendsHtml}
             </div>
             
-            <div class="section">
-              <div class="section-title">域名（${(item.domains || []).length}）</div>
-              ${domainsHtml}
-            </div>
             <div class="section">
               <div class="section-title">卡密（${cards.length}）</div>
               ${cardsHtml}
@@ -747,7 +726,6 @@
           document.getElementById('modalTitle').textContent = '编辑用户';
           document.getElementById('username').value = item.username || '';
           document.getElementById('yesterdayStat').value = item.yesterdayStat || '';
-          document.getElementById('domains').value = (item.domains || []).join('\n');
           tempCards = JSON.parse(JSON.stringify(item.cards || []));
           tempNotes = JSON.parse(JSON.stringify(item.notes || []));
           tempBackends = JSON.parse(JSON.stringify(normalizeBackends(item)));
@@ -765,9 +743,6 @@
     function saveItem(e) {
       e.preventDefault();
       const id = document.getElementById('editId').value;
-
-      const domainsText = document.getElementById('domains').value || '';
-      const domains = domainsText.split('\n').map(d => d.trim()).filter(d => d);
 
       const cards = tempCards
         .filter(c => c.name.trim() || c.content.trim())
@@ -798,9 +773,8 @@
         username: document.getElementById('username').value.trim(),
         yesterdayStat: document.getElementById('yesterdayStat').value.trim(),
         backends: backends,
-        // 兼容旧字段，取第一条作为 backend
+        // 兼容旧字段
         backend: backends.length ? backends[0].content : '',
-        domains: domains,
         cards: cards,
         notes: notes,
         created: id ? (loadData().find(i => i.id === id)?.created || Date.now()) : Date.now()
