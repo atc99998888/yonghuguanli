@@ -224,6 +224,22 @@
     }
     .modal-footer .btn { flex: 1; padding: 12px; min-width: 110px; }
 
+    /* 导出弹窗底部按钮：两列网格，手机上不会被裁切 */
+    .export-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 14px 0 calc(20px + env(safe-area-inset-bottom));
+    }
+    .export-footer .btn {
+      flex: none;
+      min-width: 0;
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+    }
+    .export-footer .btn-full { grid-column: 1 / -1; }
+
     .list-box {
       background: #f8fafc;
       border: 1px solid var(--border);
@@ -361,11 +377,11 @@
         </div>
         <div class="export-content" id="exportContent"></div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline" onclick="closeExportModal()">关闭</button>
-        <button type="button" class="btn btn-outline" onclick="copyExportData()">复制全部内容</button>
-        <button type="button" class="btn btn-primary" id="shareBtn" onclick="shareData()" style="display:none">系统分享</button>
-        <button type="button" class="btn btn-primary" onclick="downloadFile()">尝试下载文件</button>
+      <div class="modal-footer export-footer">
+        <button type="button" class="btn btn-primary" onclick="copyExportData()">复制全部内容</button>
+        <button type="button" class="btn btn-outline" onclick="downloadFile()">尝试下载文件</button>
+        <button type="button" class="btn btn-outline btn-full" id="shareBtn" onclick="shareData()" style="display:none">系统分享</button>
+        <button type="button" class="btn btn-outline btn-full" onclick="closeExportModal()">关闭</button>
       </div>
     </div>
   </div>
@@ -488,7 +504,7 @@
               const url = formatLink(b.content || '');
               return `
                 <div class="item-box">
-                  ${b.name ? `<div class="item-name">${highlight(b.name, keyword)}</div>` : ''}
+                  <div class="item-name">${highlight(b.name || '未命名后台', keyword)}</div>
                   <div class="item-content">
                     ${url
                       ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline">${highlight(b.content || '', keyword)}</a>`
@@ -815,7 +831,7 @@
       exportFileName = `用户资料_${new Date().toISOString().slice(0, 10)}.json`;
       document.getElementById('exportContent').textContent = exportJsonStr;
       if (navigator.share) {
-        document.getElementById('shareBtn').style.display = 'inline-block';
+        document.getElementById('shareBtn').style.display = '';
       }
       document.getElementById('exportModal').classList.add('show');
     }
