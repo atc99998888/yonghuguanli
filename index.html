@@ -487,11 +487,11 @@
           ? backends.map(b => {
               const url = formatLink(b.content || '');
               return `
-                <div class="item-box" style="text-align:left;">
-                  ${b.name ? `<div class="item-name" style="text-align:left;">${highlight(b.name, keyword)}</div>` : ''}
-                  <div class="item-content" style="text-align:left;">
+                <div class="item-box" style="text-align:left !important;">
+                  ${b.name ? `<div class="item-name" style="text-align:left !important;">${highlight(b.name, keyword)}</div>` : ''}
+                  <div class="item-content" style="text-align:left !important;">
                     ${url
-                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;text-align:left;display:inline-block;">${highlight(b.content || '', keyword)}</a>`
+                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;display:block;text-align:left !important;">${highlight(b.content || '', keyword)}</a>`
                       : highlight(b.content || '', keyword)}
                   </div>
                 </div>
