@@ -151,7 +151,8 @@
   max-width: 520px;
   border-radius: 16px 16px 0 0;
   padding: 20px 18px 0;
-  max-height: 92vh;
+  max-height: 88vh;
+  max-height: 88dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -216,7 +217,7 @@
 .modal-footer {
   display: flex;
   gap: 10px;
-  padding: 14px 0 20px;
+  padding: 14px 0 calc(20px + env(safe-area-inset-bottom));
   flex-shrink: 0;
   background: white;
   border-top: 1px solid var(--border);
@@ -225,6 +226,13 @@
   z-index: 10;
 }
 .modal-footer .btn { flex: 1; padding: 12px; min-width: 110px; }
+.export-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.export-footer .btn { min-width: 0; width: 100%; }
+.export-footer .span-2 { grid-column: 1 / -1; }
 
 .list-box {
   background: #f8fafc;
@@ -370,11 +378,11 @@
         </div>
         <div class="export-content" id="exportContent"></div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline" onclick="closeExportModal()">关闭</button>
-        <button type="button" class="btn btn-outline" onclick="copyExportData()">复制全部内容</button>
-        <button type="button" class="btn btn-primary" id="shareBtn" onclick="shareData()" style="display:none">系统分享</button>
-        <button type="button" class="btn btn-primary" onclick="downloadFile()">尝试下载文件</button>
+      <div class="modal-footer export-footer">
+        <button type="button" class="btn btn-primary span-2" onclick="copyExportData()">复制全部内容</button>
+        <button type="button" class="btn btn-outline" id="shareBtn" onclick="shareData()" style="display:none">系统分享</button>
+        <button type="button" class="btn btn-outline" id="downloadBtn" onclick="downloadFile()">尝试下载文件</button>
+        <button type="button" class="btn btn-outline span-2" onclick="closeExportModal()">关闭</button>
       </div>
     </div>
   </div>
@@ -829,7 +837,10 @@ function exportData() {
   exportFileName = `用户资料_${new Date().toISOString().slice(0, 10)}.json`;
   document.getElementById('exportContent').textContent = exportJsonStr;
   if (navigator.share) {
-    document.getElementById('shareBtn').style.display = 'inline-block';
+    document.getElementById('shareBtn').style.display = 'block';
+    document.getElementById('downloadBtn').classList.remove('span-2');
+  } else {
+    document.getElementById('downloadBtn').classList.add('span-2');
   }
   document.getElementById('exportModal').classList.add('show');
 }
