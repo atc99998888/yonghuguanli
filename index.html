@@ -84,12 +84,6 @@
       font-weight: 500;
       margin-bottom: 8px;
     }
-    .info-row {
-      font-size: 14px;
-      margin-bottom: 6px;
-      word-break: break-all;
-    }
-    .info-row .label { color: var(--text-light); margin-right: 6px; }
     .section {
       margin-top: 12px;
       padding-top: 12px;
@@ -111,6 +105,7 @@
     }
     .item-name { font-weight: 600; color: var(--primary); margin-bottom: 4px; }
     .item-content { word-break: break-all; color: #334155; white-space: pre-wrap; }
+    .backend-link { color: #2563eb; text-decoration: underline; word-break: break-all; }
     .kami-item {
       display: flex;
       justify-content: space-between;
@@ -476,42 +471,21 @@
       list.innerHTML = data.map(item => {
         const cards = item.cards || [];
         const cardsHtml = cards.length
-          ? cards.map(c => `
-              <div class="item-box">
-                <div class="kami-item">
-                  <div class="left">
-                    <div class="item-name">${highlight(c.name || '未命名卡密', keyword)}</div>
-                    <div class="item-content">${highlight(c.content || '', keyword)}</div>
-                  </div>
-                  <button class="btn btn-outline btn-xs" onclick="copyText(\`${escapeHtml(c.content || '')}\`)">复制</button>
-                </div>
-              </div>
-            `).join('')
+          ? cards.map(c => `<div class="item-box"><div class="kami-item"><div class="left"><div class="item-name">${highlight(c.name || '未命名卡密', keyword)}</div><div class="item-content">${highlight(c.content || '', keyword)}</div></div><button class="btn btn-outline btn-xs" onclick="copyText(\`${escapeHtml(c.content || '')}\`)">复制</button></div></div>`).join('')
           : '<div style="color:#94a3b8;font-size:13px">暂无卡密</div>';
 
         const notesHtml = (item.notes && item.notes.length)
-          ? item.notes.map(n => `
-              <div class="item-box">
-                <div class="item-name">${highlight(n.name || '未命名备注', keyword)}</div>
-                <div class="item-content">${highlight(n.content || '', keyword)}</div>
-              </div>
-            `).join('')
+          ? item.notes.map(n => `<div class="item-box"><div class="item-name">${highlight(n.name || '未命名备注', keyword)}</div><div class="item-content">${highlight(n.content || '', keyword)}</div></div>`).join('')
           : '<div style="color:#94a3b8;font-size:13px">暂无备注</div>';
 
         const backends = normalizeBackends(item);
         const backendsHtml = backends.length
           ? backends.map(b => {
               const url = formatLink(b.content || '');
-              return `
-                <div class="item-box">
-                  <div class="item-name">${highlight(b.name || '未命名后台', keyword)}</div>
-                  <div class="item-content">
-                    ${url
-                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline">${highlight(b.content || '', keyword)}</a>`
-                      : highlight(b.content || '', keyword)}
-                  </div>
-                </div>
-              `;
+              const linkHtml = url
+                ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="backend-link">${highlight(b.content || '', keyword)}</a>`
+                : highlight(b.content || '', keyword);
+              return `<div class="item-box"><div class="kami-item"><div class="left"><div class="item-name">${highlight(b.name || '未命名后台', keyword)}</div><div class="item-content">${linkHtml}</div></div></div></div>`;
             }).join('')
           : '<div style="color:#94a3b8;font-size:13px">暂无后台链接</div>';
 
@@ -525,12 +499,12 @@
               </div>
             </div>
             ${item.yesterdayStat ? `<div class="yesterday-stat">昨日统计：${highlight(item.yesterdayStat, keyword)}</div>` : ''}
-            
+
             <div class="section" style="margin-top:8px;padding-top:8px;border-top:none">
               <div class="section-title">后台链接（${backends.length}）</div>
               ${backendsHtml}
             </div>
-            
+
             <div class="section">
               <div class="section-title">卡密（${cards.length}）</div>
               ${cardsHtml}
