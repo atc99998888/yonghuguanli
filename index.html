@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -134,154 +135,157 @@
       border-radius: 2px;
     }
 
-    .modal-mask {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 100;
-    }
-    .modal-mask.show { display: flex; }
-    .modal {
-      background: white;
-      width: 100%;
-      max-width: 520px;
-      border-radius: 16px 16px 0 0;
-      padding: 20px 18px 0;
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    @media (min-width: 600px) {
-      .modal-mask { align-items: center; }
-      .modal { border-radius: 16px; }
-    }
-    .modal h2 { font-size: 1.15rem; margin-bottom: 18px; flex-shrink: 0; }
-    .modal-body {
-      flex: 1;
-      overflow-y: auto;
-      padding-bottom: 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .form-group { margin-bottom: 14px; }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 5px;
-      color: var(--text-light);
-    }
-    .input-wrap {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-    }
-    .input-wrap input,
-    .input-wrap textarea {
-      flex: 1;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-      font-family: inherit;
-    }
-    .input-wrap input:focus,
-    .input-wrap textarea:focus {
-      border-color: var(--primary);
-    }
-    .input-wrap textarea { resize: vertical; min-height: 70px; }
-    .clear-btn {
-      flex-shrink: 0;
-      background: #f1f5f9;
-      color: #64748b;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0 12px;
-      font-size: 13px;
-      height: 42px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .clear-btn:hover { background: #e2e8f0; color: #334155; }
-    .clear-btn.textarea-clear {
-      height: auto;
-      padding: 10px 12px;
-      align-self: stretch;
-    }
-    .modal-footer {
-      display: flex;
-      gap: 10px;
-      padding: 14px 0 20px;
-      flex-shrink: 0;
-      background: white;
-      border-top: 1px solid var(--border);
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
-    }
-    .modal-footer .btn { flex: 1; padding: 12px; min-width: 110px; }
+```
+.modal-mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px 16px 0 0;
+  padding: 20px 18px 0;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+@media (min-width: 600px) {
+  .modal-mask { align-items: center; }
+  .modal { border-radius: 16px; }
+}
+.modal h2 { font-size: 1.15rem; margin-bottom: 18px; flex-shrink: 0; }
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--text-light);
+}
+.input-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.input-wrap input,
+.input-wrap textarea {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+}
+.input-wrap input:focus,
+.input-wrap textarea:focus {
+  border-color: var(--primary);
+}
+.input-wrap textarea { resize: vertical; min-height: 70px; }
+.clear-btn {
+  flex-shrink: 0;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  height: 42px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.clear-btn:hover { background: #e2e8f0; color: #334155; }
+.clear-btn.textarea-clear {
+  height: auto;
+  padding: 10px 12px;
+  align-self: stretch;
+}
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 0 20px;
+  flex-shrink: 0;
+  background: white;
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+.modal-footer .btn { flex: 1; padding: 12px; min-width: 110px; }
 
-    .list-box {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 6px;
-    }
-    .list-item {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
-      position: relative;
-    }
-    .list-item .remove-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #fee2e2;
-      color: #b91c1c;
-      border: none;
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .add-btn {
-      width: 100%;
-      margin-top: 4px;
-      background: #eff6ff;
-      color: var(--primary);
-      border: 1px dashed #93c5fd;
-    }
+.list-box {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 6px;
+}
+.list-item {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.list-item .remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.add-btn {
+  width: 100%;
+  margin-top: 4px;
+  background: #eff6ff;
+  color: var(--primary);
+  border: 1px dashed #93c5fd;
+}
 
-    .export-tip {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 13px;
-      color: #1e40af;
-      margin-bottom: 14px;
-      line-height: 1.6;
-    }
-    .export-content {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 12px;
-      max-height: 220px;
-      overflow: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
-      margin-bottom: 8px;
-      user-select: all;
-    }
+.export-tip {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  color: #1e40af;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.export-content {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-bottom: 8px;
+  user-select: all;
+}
+```
+
   </style>
 </head>
 <body>
@@ -300,6 +304,7 @@
   <div id="list"></div>
 
   <!-- 添加/编辑弹窗 -->
+
   <div class="modal-mask" id="modal">
     <div class="modal">
       <h2 id="modalTitle">添加用户</h2>
@@ -314,42 +319,46 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label>昨日统计</label>
-            <div class="input-wrap">
-              <input type="text" id="yesterdayStat" placeholder="例如：访问 128 / 注册 12" />
-              <button type="button" class="clear-btn" onclick="clearField('yesterdayStat')">清空</button>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>后台链接</label>
-            <div class="list-box" id="backendList"></div>
-            <button type="button" class="btn add-btn" onclick="addBackendItem()">+ 添加后台链接</button>
-          </div>
-
-          <div class="form-group">
-            <label>卡密列表</label>
-            <div class="list-box" id="kamiList"></div>
-            <button type="button" class="btn add-btn" onclick="addKamiItem()">+ 添加卡密</button>
-          </div>
-
-          <div class="form-group">
-            <label>自定义备注</label>
-            <div class="list-box" id="noteList"></div>
-            <button type="button" class="btn add-btn" onclick="addNoteItem()">+ 添加备注</button>
-          </div>
+```
+      <div class="form-group">
+        <label>昨日统计</label>
+        <div class="input-wrap">
+          <input type="text" id="yesterdayStat" placeholder="例如：访问 128 / 注册 12" />
+          <button type="button" class="clear-btn" onclick="clearField('yesterdayStat')">清空</button>
         </div>
+      </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
-          <button type="submit" class="btn btn-primary">保存</button>
-        </div>
-      </form>
+      <div class="form-group">
+        <label>后台链接</label>
+        <div class="list-box" id="backendList"></div>
+        <button type="button" class="btn add-btn" onclick="addBackendItem()">+ 添加后台链接</button>
+      </div>
+
+      <div class="form-group">
+        <label>卡密列表</label>
+        <div class="list-box" id="kamiList"></div>
+        <button type="button" class="btn add-btn" onclick="addKamiItem()">+ 添加卡密</button>
+      </div>
+
+      <div class="form-group">
+        <label>自定义备注</label>
+        <div class="list-box" id="noteList"></div>
+        <button type="button" class="btn add-btn" onclick="addNoteItem()">+ 添加备注</button>
+      </div>
     </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
+      <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+  </form>
+</div>
+```
+
   </div>
 
   <!-- 导出弹窗 -->
+
   <div class="modal-mask" id="exportModal">
     <div class="modal">
       <h2>导出数据</h2>
@@ -486,13 +495,16 @@
         const backendsHtml = backends.length
           ? backends.map(b => {
               const url = formatLink(b.content || '');
+              const linkHtml = url
+                ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;">${highlight(b.content || '', keyword)}</a>`
+                : highlight(b.content || '', keyword);
               return `
-                <div class="item-box" style="text-align:left !important;">
-                  ${b.name ? `<div class="item-name" style="text-align:left !important;">${highlight(b.name, keyword)}</div>` : ''}
-                  <div class="item-content" style="text-align:left !important;">
-                    ${url
-                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;display:block;text-align:left !important;">${highlight(b.content || '', keyword)}</a>`
-                      : highlight(b.content || '', keyword)}
+                <div class="item-box">
+                  <div class="kami-item">
+                    <div class="left">
+                      <div class="item-name">${highlight(b.name || '未命名链接', keyword)}</div>
+                      <div class="item-content">${linkHtml}</div>
+                    </div>
                   </div>
                 </div>
               `;
@@ -619,291 +631,295 @@
             <label style="font-size:12px">卡密内容（支持多行，自动去空行）</label>
             <div class="input-wrap">
               <textarea rows="3" oninput="updateKami(${index}, 'content', this.value)" placeholder="直接粘贴卡密内容，支持换行">${escapeHtml(c.content || '')}</textarea>
-              <button type="button" class="clear-btn textarea-clear" onclick="clearKamiField(${index}, 'content')">清空</button>
-            </div>
-          </div>
+
+```
+          <button type="button" class="clear-btn textarea-clear" onclick="clearKamiField(${index}, 'content')">清空</button>
         </div>
-      `).join('');
-    }
+      </div>
+    </div>
+  `).join('');
+}
 
-    function renderNoteList() {
-      const box = document.getElementById('noteList');
-      if (tempNotes.length === 0) {
-        box.innerHTML = '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:8px 0">暂无备注</div>';
-        return;
-      }
-      box.innerHTML = tempNotes.map((n, index) => `
-        <div class="list-item">
-          <button type="button" class="remove-btn" onclick="removeNoteItem(${index})">删除</button>
-          <div class="form-group" style="margin-bottom:8px">
-            <label style="font-size:12px">备注名称</label>
-            <div class="input-wrap">
-              <input type="text" value="${escapeHtml(n.name || '')}" oninput="updateNote(${index}, 'name', this.value)" placeholder="例如：联系方式、到期时间" />
-              <button type="button" class="clear-btn" onclick="clearNoteField(${index}, 'name')">清空</button>
-            </div>
-          </div>
-          <div class="form-group" style="margin-bottom:0">
-            <label style="font-size:12px">备注内容</label>
-            <div class="input-wrap">
-              <textarea rows="2" oninput="updateNote(${index}, 'content', this.value)" placeholder="备注内容">${escapeHtml(n.content || '')}</textarea>
-              <button type="button" class="clear-btn textarea-clear" onclick="clearNoteField(${index}, 'content')">清空</button>
-            </div>
-          </div>
+function renderNoteList() {
+  const box = document.getElementById('noteList');
+  if (tempNotes.length === 0) {
+    box.innerHTML = '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:8px 0">暂无备注</div>';
+    return;
+  }
+  box.innerHTML = tempNotes.map((n, index) => `
+    <div class="list-item">
+      <button type="button" class="remove-btn" onclick="removeNoteItem(${index})">删除</button>
+      <div class="form-group" style="margin-bottom:8px">
+        <label style="font-size:12px">备注名称</label>
+        <div class="input-wrap">
+          <input type="text" value="${escapeHtml(n.name || '')}" oninput="updateNote(${index}, 'name', this.value)" placeholder="例如：联系方式、到期时间" />
+          <button type="button" class="clear-btn" onclick="clearNoteField(${index}, 'name')">清空</button>
         </div>
-      `).join('');
-    }
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label style="font-size:12px">备注内容</label>
+        <div class="input-wrap">
+          <textarea rows="2" oninput="updateNote(${index}, 'content', this.value)" placeholder="备注内容">${escapeHtml(n.content || '')}</textarea>
+          <button type="button" class="clear-btn textarea-clear" onclick="clearNoteField(${index}, 'content')">清空</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 
-    function clearBackendField(index, field) {
-      if (tempBackends[index]) {
-        tempBackends[index][field] = '';
-        renderBackendList();
-      }
-    }
+function clearBackendField(index, field) {
+  if (tempBackends[index]) {
+    tempBackends[index][field] = '';
+    renderBackendList();
+  }
+}
 
-    function clearKamiField(index, field) {
-      if (tempCards[index]) {
-        tempCards[index][field] = '';
-        renderKamiList();
-      }
-    }
+function clearKamiField(index, field) {
+  if (tempCards[index]) {
+    tempCards[index][field] = '';
+    renderKamiList();
+  }
+}
 
-    function clearNoteField(index, field) {
-      if (tempNotes[index]) {
-        tempNotes[index][field] = '';
-        renderNoteList();
-      }
-    }
+function clearNoteField(index, field) {
+  if (tempNotes[index]) {
+    tempNotes[index][field] = '';
+    renderNoteList();
+  }
+}
 
-    function addBackendItem() {
-      tempBackends.push({ id: generateId(), name: '', content: '' });
-      renderBackendList();
-    }
-    function removeBackendItem(index) {
-      tempBackends.splice(index, 1);
-      renderBackendList();
-    }
-    function updateBackend(index, field, value) {
-      if (tempBackends[index]) tempBackends[index][field] = value;
-    }
+function addBackendItem() {
+  tempBackends.push({ id: generateId(), name: '', content: '' });
+  renderBackendList();
+}
+function removeBackendItem(index) {
+  tempBackends.splice(index, 1);
+  renderBackendList();
+}
+function updateBackend(index, field, value) {
+  if (tempBackends[index]) tempBackends[index][field] = value;
+}
 
-    function addKamiItem() {
-      tempCards.push({ id: generateId(), name: '', content: '' });
-      renderKamiList();
+function addKamiItem() {
+  tempCards.push({ id: generateId(), name: '', content: '' });
+  renderKamiList();
+}
+function removeKamiItem(index) {
+  tempCards.splice(index, 1);
+  renderKamiList();
+}
+function updateKami(index, field, value) {
+  if (tempCards[index]) tempCards[index][field] = value;
+}
+
+function addNoteItem() {
+  tempNotes.push({ id: generateId(), name: '', content: '' });
+  renderNoteList();
+}
+function removeNoteItem(index) {
+  tempNotes.splice(index, 1);
+  renderNoteList();
+}
+function updateNote(index, field, value) {
+  if (tempNotes[index]) tempNotes[index][field] = value;
+}
+
+function openModal(id = null) {
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('form').reset();
+  document.getElementById('editId').value = '';
+  document.getElementById('modalTitle').textContent = '添加用户';
+  tempCards = [];
+  tempNotes = [];
+  tempBackends = [];
+
+  if (id) {
+    const item = loadData().find(i => i.id === id);
+    if (item) {
+      document.getElementById('editId').value = id;
+      document.getElementById('modalTitle').textContent = '编辑用户';
+      document.getElementById('username').value = item.username || '';
+      document.getElementById('yesterdayStat').value = item.yesterdayStat || '';
+      tempCards = JSON.parse(JSON.stringify(item.cards || []));
+      tempNotes = JSON.parse(JSON.stringify(item.notes || []));
+      tempBackends = JSON.parse(JSON.stringify(normalizeBackends(item)));
     }
-    function removeKamiItem(index) {
-      tempCards.splice(index, 1);
-      renderKamiList();
-    }
-    function updateKami(index, field, value) {
-      if (tempCards[index]) tempCards[index][field] = value;
-    }
+  }
+  renderBackendList();
+  renderKamiList();
+  renderNoteList();
+}
 
-    function addNoteItem() {
-      tempNotes.push({ id: generateId(), name: '', content: '' });
-      renderNoteList();
-    }
-    function removeNoteItem(index) {
-      tempNotes.splice(index, 1);
-      renderNoteList();
-    }
-    function updateNote(index, field, value) {
-      if (tempNotes[index]) tempNotes[index][field] = value;
-    }
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
 
-    function openModal(id = null) {
-      document.getElementById('modal').classList.add('show');
-      document.getElementById('form').reset();
-      document.getElementById('editId').value = '';
-      document.getElementById('modalTitle').textContent = '添加用户';
-      tempCards = [];
-      tempNotes = [];
-      tempBackends = [];
+function saveItem(e) {
+  e.preventDefault();
+  const id = document.getElementById('editId').value;
 
-      if (id) {
-        const item = loadData().find(i => i.id === id);
-        if (item) {
-          document.getElementById('editId').value = id;
-          document.getElementById('modalTitle').textContent = '编辑用户';
-          document.getElementById('username').value = item.username || '';
-          document.getElementById('yesterdayStat').value = item.yesterdayStat || '';
-          tempCards = JSON.parse(JSON.stringify(item.cards || []));
-          tempNotes = JSON.parse(JSON.stringify(item.notes || []));
-          tempBackends = JSON.parse(JSON.stringify(normalizeBackends(item)));
-        }
-      }
-      renderBackendList();
-      renderKamiList();
-      renderNoteList();
-    }
+  const cards = tempCards
+    .filter(c => c.name.trim() || c.content.trim())
+    .map(c => ({
+      id: c.id || generateId(),
+      name: c.name.trim(),
+      content: cleanContent(c.content)
+    }));
 
-    function closeModal() {
-      document.getElementById('modal').classList.remove('show');
-    }
+  const notes = tempNotes
+    .filter(n => n.name.trim() || n.content.trim())
+    .map(n => ({
+      id: n.id || generateId(),
+      name: n.name.trim(),
+      content: n.content.trim()
+    }));
 
-    function saveItem(e) {
-      e.preventDefault();
-      const id = document.getElementById('editId').value;
+  const backends = tempBackends
+    .filter(b => b.name.trim() || b.content.trim())
+    .map(b => ({
+      id: b.id || generateId(),
+      name: b.name.trim(),
+      content: b.content.trim()
+    }));
 
-      const cards = tempCards
-        .filter(c => c.name.trim() || c.content.trim())
-        .map(c => ({
-          id: c.id || generateId(),
-          name: c.name.trim(),
-          content: cleanContent(c.content)
-        }));
+  const item = {
+    id: id || generateId(),
+    username: document.getElementById('username').value.trim(),
+    yesterdayStat: document.getElementById('yesterdayStat').value.trim(),
+    backends: backends,
+    // 兼容旧字段
+    backend: backends.length ? backends[0].content : '',
+    cards: cards,
+    notes: notes,
+    created: id ? (loadData().find(i => i.id === id)?.created || Date.now()) : Date.now()
+  };
 
-      const notes = tempNotes
-        .filter(n => n.name.trim() || n.content.trim())
-        .map(n => ({
-          id: n.id || generateId(),
-          name: n.name.trim(),
-          content: n.content.trim()
-        }));
+  let data = loadData();
+  if (id) {
+    data = data.map(i => i.id === id ? item : i);
+  } else {
+    data.push(item);
+  }
+  saveData(data);
+  closeModal();
+  render();
+}
 
-      const backends = tempBackends
-        .filter(b => b.name.trim() || b.content.trim())
-        .map(b => ({
-          id: b.id || generateId(),
-          name: b.name.trim(),
-          content: b.content.trim()
-        }));
+function editItem(id) {
+  openModal(id);
+}
 
-      const item = {
-        id: id || generateId(),
-        username: document.getElementById('username').value.trim(),
-        yesterdayStat: document.getElementById('yesterdayStat').value.trim(),
-        backends: backends,
-        // 兼容旧字段
-        backend: backends.length ? backends[0].content : '',
-        cards: cards,
-        notes: notes,
-        created: id ? (loadData().find(i => i.id === id)?.created || Date.now()) : Date.now()
-      };
+function deleteItem(id) {
+  if (!confirm('确定删除这条记录吗？')) return;
+  const data = loadData().filter(i => i.id !== id);
+  saveData(data);
+  render();
+}
 
-      let data = loadData();
-      if (id) {
-        data = data.map(i => i.id === id ? item : i);
+let exportJsonStr = '';
+let exportFileName = '';
+
+function exportData() {
+  const data = loadData();
+  if (data.length === 0) {
+    alert('当前没有数据可导出');
+    return;
+  }
+  exportJsonStr = JSON.stringify(data, null, 2);
+  exportFileName = `用户资料_${new Date().toISOString().slice(0, 10)}.json`;
+  document.getElementById('exportContent').textContent = exportJsonStr;
+  if (navigator.share) {
+    document.getElementById('shareBtn').style.display = 'inline-block';
+  }
+  document.getElementById('exportModal').classList.add('show');
+}
+
+function closeExportModal() {
+  document.getElementById('exportModal').classList.remove('show');
+}
+
+function downloadFile() {
+  if (!exportJsonStr) return;
+  try {
+    const blob = new Blob([exportJsonStr], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = exportFileName;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    alert('已尝试触发下载。\n如果没有成功，请使用「复制全部内容」。');
+  } catch (e) {
+    alert('当前环境不支持直接下载，请使用「复制全部内容」。');
+  }
+}
+
+function copyExportData() {
+  const text = exportJsonStr;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => alert('✅ 已复制到剪贴板！')).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+async function shareData() {
+  if (!navigator.share) return;
+  try {
+    const file = new File([exportJsonStr], exportFileName, { type: 'application/json' });
+    await navigator.share({ title: '用户资料备份', files: [file] });
+  } catch (e) {
+    try {
+      await navigator.share({ title: '用户资料备份', text: exportJsonStr });
+    } catch (err) {}
+  }
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (ev) {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if (!Array.isArray(imported)) throw new Error('格式错误');
+      const cover = confirm(`即将导入 ${imported.length} 条数据。\n\n点击「确定」：覆盖现有全部数据\n点击「取消」：合并到现有数据中`);
+      if (cover) {
+        saveData(imported);
       } else {
-        data.push(item);
-      }
-      saveData(data);
-      closeModal();
-      render();
-    }
-
-    function editItem(id) {
-      openModal(id);
-    }
-
-    function deleteItem(id) {
-      if (!confirm('确定删除这条记录吗？')) return;
-      const data = loadData().filter(i => i.id !== id);
-      saveData(data);
-      render();
-    }
-
-    let exportJsonStr = '';
-    let exportFileName = '';
-
-    function exportData() {
-      const data = loadData();
-      if (data.length === 0) {
-        alert('当前没有数据可导出');
-        return;
-      }
-      exportJsonStr = JSON.stringify(data, null, 2);
-      exportFileName = `用户资料_${new Date().toISOString().slice(0, 10)}.json`;
-      document.getElementById('exportContent').textContent = exportJsonStr;
-      if (navigator.share) {
-        document.getElementById('shareBtn').style.display = 'inline-block';
-      }
-      document.getElementById('exportModal').classList.add('show');
-    }
-
-    function closeExportModal() {
-      document.getElementById('exportModal').classList.remove('show');
-    }
-
-    function downloadFile() {
-      if (!exportJsonStr) return;
-      try {
-        const blob = new Blob([exportJsonStr], { type: 'application/json;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = exportFileName;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 2000);
-        alert('已尝试触发下载。\n如果没有成功，请使用「复制全部内容」。');
-      } catch (e) {
-        alert('当前环境不支持直接下载，请使用「复制全部内容」。');
-      }
-    }
-
-    function copyExportData() {
-      const text = exportJsonStr;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => alert('✅ 已复制到剪贴板！')).catch(() => fallbackCopy(text));
-      } else {
-        fallbackCopy(text);
-      }
-    }
-
-    async function shareData() {
-      if (!navigator.share) return;
-      try {
-        const file = new File([exportJsonStr], exportFileName, { type: 'application/json' });
-        await navigator.share({ title: '用户资料备份', files: [file] });
-      } catch (e) {
-        try {
-          await navigator.share({ title: '用户资料备份', text: exportJsonStr });
-        } catch (err) {}
-      }
-    }
-
-    function importData(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (ev) {
-        try {
-          const imported = JSON.parse(ev.target.result);
-          if (!Array.isArray(imported)) throw new Error('格式错误');
-          const cover = confirm(`即将导入 ${imported.length} 条数据。\n\n点击「确定」：覆盖现有全部数据\n点击「取消」：合并到现有数据中`);
-          if (cover) {
-            saveData(imported);
-          } else {
-            const existing = loadData();
-            const merged = [...existing];
-            imported.forEach(item => {
-              if (!item.id) item.id = generateId();
-              if (!merged.find(i => i.id === item.id)) {
-                merged.push(item);
-              }
-            });
-            saveData(merged);
+        const existing = loadData();
+        const merged = [...existing];
+        imported.forEach(item => {
+          if (!item.id) item.id = generateId();
+          if (!merged.find(i => i.id === item.id)) {
+            merged.push(item);
           }
-          render();
-          alert('导入成功！');
-        } catch (err) {
-          alert('导入失败：文件格式不正确');
-        }
-      };
-      reader.readAsText(file);
-      e.target.value = '';
+        });
+        saveData(merged);
+      }
+      render();
+      alert('导入成功！');
+    } catch (err) {
+      alert('导入失败：文件格式不正确');
     }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
 
-    document.getElementById('modal').addEventListener('click', function (e) {
-      if (e.target === this) closeModal();
-    });
-    document.getElementById('exportModal').addEventListener('click', function (e) {
-      if (e.target === this) closeExportModal();
-    });
+document.getElementById('modal').addEventListener('click', function (e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('exportModal').addEventListener('click', function (e) {
+  if (e.target === this) closeExportModal();
+});
 
-    render();
+render();
+```
+
   </script>
 </body>
 </html>
