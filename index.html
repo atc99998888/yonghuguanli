@@ -323,7 +323,7 @@
           </div>
 
           <div class="form-group">
-            <label>后台链接列表</label>
+            <label>后台链接</label>
             <div class="list-box" id="backendList"></div>
             <button type="button" class="btn add-btn" onclick="addBackendItem()">+ 添加后台链接</button>
           </div>
@@ -426,7 +426,7 @@
     function normalizeBackends(item) {
       if (Array.isArray(item.backends)) return item.backends;
       if (item.backend && typeof item.backend === 'string' && item.backend.trim()) {
-        return [{ id: generateId(), name: '主后台', content: item.backend.trim() }];
+        return [{ id: generateId(), name: '', content: item.backend.trim() }];
       }
       return [];
     }
@@ -487,17 +487,12 @@
           ? backends.map(b => {
               const url = formatLink(b.content || '');
               return `
-                <div class="item-box">
-                  <div class="kami-item">
-                    <div class="left">
-                      <div class="item-name">${highlight(b.name || '未命名后台', keyword)}</div>
-                      <div class="item-content">
-                        ${url
-                          ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline">${highlight(b.content || '', keyword)}</a>`
-                          : highlight(b.content || '', keyword)}
-                      </div>
-                    </div>
-                    ${b.content ? `<button class="btn btn-outline btn-xs" onclick="copyText(\`${escapeHtml(b.content || '')}\`)">复制</button>` : ''}
+                <div class="item-box" style="text-align:left !important;">
+                  ${b.name ? `<div class="item-name" style="text-align:left !important;">${highlight(b.name, keyword)}</div>` : ''}
+                  <div class="item-content" style="text-align:left !important;">
+                    ${url
+                      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline;display:block;text-align:left !important;">${highlight(b.content || '', keyword)}</a>`
+                      : highlight(b.content || '', keyword)}
                   </div>
                 </div>
               `;
@@ -587,17 +582,17 @@
         <div class="list-item">
           <button type="button" class="remove-btn" onclick="removeBackendItem(${index})">删除</button>
           <div class="form-group" style="margin-bottom:8px">
-            <label style="font-size:12px">链接名称</label>
+            <label style="font-size:12px">链接名称（可选）</label>
             <div class="input-wrap">
               <input type="text" value="${escapeHtml(b.name || '')}" oninput="updateBackend(${index}, 'name', this.value)" placeholder="例如：主后台、备用后台" />
               <button type="button" class="clear-btn" onclick="clearBackendField(${index}, 'name')">清空</button>
             </div>
           </div>
           <div class="form-group" style="margin-bottom:0">
-            <label style="font-size:12px">后台链接内容（支持多行，自动去空行）</label>
+            <label style="font-size:12px">后台链接</label>
             <div class="input-wrap">
-              <textarea rows="2" oninput="updateBackend(${index}, 'content', this.value)" placeholder="https://...">${escapeHtml(b.content || '')}</textarea>
-              <button type="button" class="clear-btn textarea-clear" onclick="clearBackendField(${index}, 'content')">清空</button>
+              <input type="text" value="${escapeHtml(b.content || '')}" oninput="updateBackend(${index}, 'content', this.value)" placeholder="https://..." />
+              <button type="button" class="clear-btn" onclick="clearBackendField(${index}, 'content')">清空</button>
             </div>
           </div>
         </div>
@@ -770,7 +765,7 @@
         .map(b => ({
           id: b.id || generateId(),
           name: b.name.trim(),
-          content: cleanContent(b.content)
+          content: b.content.trim()
         }));
 
       const item = {
@@ -778,6 +773,8 @@
         username: document.getElementById('username').value.trim(),
         yesterdayStat: document.getElementById('yesterdayStat').value.trim(),
         backends: backends,
+        // 兼容旧字段
+        backend: backends.length ? backends[0].content : '',
         cards: cards,
         notes: notes,
         created: id ? (loadData().find(i => i.id === id)?.created || Date.now()) : Date.now()
